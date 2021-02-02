@@ -69,7 +69,7 @@ class Downloader(multiprocessing.Process):
     def __to_excel(self,events):
         et_new = pd.DataFrame(events)
         print(et_new)
-        file_name = os.path.join('./events/',str(self.topic) + '.xlsx')
+        file_name = os.path.join('./events/',str(self.topic).replace(' ','-') + '.xlsx')
         try:
             if os.path.exists(file_name):
                 et_old = pd.read_excel(file_name)
@@ -78,9 +78,9 @@ class Downloader(multiprocessing.Process):
                 cIndex = [s for s in cname if 'Unnamed' in s]
                 for index in cIndex[1:]:
                     del et_merge[index]
-                et_merge.to_excel(file_name)
+                et_merge.to_excel(file_name,index=False)
             else:
-                et_new.to_excel(file_name)
+                et_new.to_excel(file_name,index=False)
         except Exception as e:
             print(e)
 
